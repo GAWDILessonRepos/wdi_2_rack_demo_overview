@@ -211,66 +211,7 @@ Use *BOTH* a HTTP **POST** and **GET**.
 
 ##### Question what are the %20 in the response?  
    
-
-## Lab 
-
-Write a Rack app, like the above, but also create a method named 'get'. 
-
-This method named 'get' will take two arguments. The first argument will be the resource path and the second argument will be a return string to send back in the body of the HTTP Response.
-
-The lambda will call this get method and get will:
-* create a Ruby hash named params
-* extract the key value pairs in the URL parameters and add each pair into the params hash.
-* use this params hash to substitute into the return string given as the second argument to the gets method.
-
-For example:
-
-```get '/stooges/show?location="Boston"&date="1-10-1944"', "<html>...<body><h3>Place: #{params[:location]}</h3><h5>Date: #{date}</body></html>"```
-
-### Lab
-Change the get method to have a second argument of the form class#method.
-
-```get '/stooges/3', 'stooge#show' ```
-
-This will:  
-1. Create a stooge object, an instance of a Stooge class.   
-2. Call the show method on this object passing the 3, lets call 3 the index, from the path as an argument.  
-3. Use this index, integer 3, to lookup a stooge in an Array of Stooges!  
-
-```
-class Stooge
-  STOOGES = %w{ Larry Moe Curly Joe}
-  
-  def show(params)
-  "Hello #{STOOGES[params[:id]]}, yuk, yuk"
-  end
-end
-
-def path_to_params(path)
-  ...
-end
-
-def get(path, class_method_str)
- # Get id from resource path.
- params = path_to_params(path)
- # params[:id] = 3
-  ...
-  
-  # May want to determine which kind of object 
-  # to create and which method to call 
-  # from the class_method_str argument!
-  
-  stooge = Stooge.new
-  stooge.show(params)
-end
-
-app = lambda do |env|
-  body = get(#{env['REQUEST_PATH'], 'stooge#show')
-  [200, { }, [body] ]
-end
-```
-
-
-                                                                      
+## Bonus
+Look thru the rack/mini_mvc.rb and understand the router and controller code.
 
 
